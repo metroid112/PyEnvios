@@ -14,11 +14,16 @@ def return_price(item):
 
 def optimize_shipping(items):
     items.sort(key=return_price, reverse=True)
-    optimized_shipping = []
     remaining_price = 200
-    shipments = 1
+    shipping = 1
+    optimized_shipping = [[shipping, remaining_price, []]]
     for item in items:
-        x = 2
+        for shipment in optimized_shipping:
+            if shipment[1] < item.price:
+                optimized_shipping.append([shipping + 1, 200, []])
+            else:
+                shipment[2].append(item)
+                shipment[1] -= item.price
     return optimized_shipping
 
 
@@ -33,7 +38,7 @@ class Item:
 
 def main():
     salir = False
-    items = []
+    items = [Item('A', 200), Item('B', 20), Item('C', 100), Item('D', 50), Item('E', 170), Item('F', 30)]
     while not salir:
         for item in items:
             print(item)
@@ -68,7 +73,7 @@ def main():
                 shipments = optimize_shipping(items)
                 for shipment in shipments:
                     print(f'Shipping {shipment[0]}')
-                    for item in shipment[1]:
+                    for item in shipment[2]:
                         print(item)
             else:
                 print('No se cargó ningun item.')
