@@ -122,11 +122,11 @@ def main():
             else:
                 print('No se cargó ningun item.')
         elif option == '3':
+            os.system('cls')
             exit()
         else:
             os.system('cls')
-            print('Opción no válida')
-            print()
+            print('Opción no válida\n')
 
 
 main()
